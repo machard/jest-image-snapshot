@@ -213,7 +213,7 @@ function diffImageToSnapshot(options) {
     rimraf.sync(diffOutputPath);
     const diffGeneratedDir = path.join(diffDir, 'generated');
     const diffGeneratedOutputPath = path.join(diffGeneratedDir,`${snapshotIdentifier}.png`);
-    rimraf.sync(diffGeneratedOutputPath);
+    rimraf.sync(diffGeneratedDir);
 
     const defaultDiffConfig = comparisonMethod !== 'ssim' ? defaultPixelmatchDiffConfig : defaultSSIMDiffConfig;
 
