@@ -300,7 +300,7 @@ function diffImageToSnapshot(options) {
       // For more information see https://www.w3.org/TR/PNG-Filters.html
       const pngBuffer = PNG.sync.write(compositeResultImage, { filterType: 4 });
       fs.writeFileSync(diffOutputPath, pngBuffer);
-      fs.writeFileSync(diffGeneratedOutputPath, receivedImage);
+      fs.writeFileSync(diffGeneratedOutputPath, receivedImageBuffer);
 
       result = {
         pass: false,
