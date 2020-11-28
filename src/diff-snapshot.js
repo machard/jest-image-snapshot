@@ -211,6 +211,9 @@ function diffImageToSnapshot(options) {
   } else {
     const diffOutputPath = path.join(diffDir, `${snapshotIdentifier}-diff.png`);
     rimraf.sync(diffOutputPath);
+    const diffGeneratedDir = path.join(diffDir, 'generated');
+    const diffGeneratedOutputPath = path.join(diffGeneratedDir,`${snapshotIdentifier}.png`);
+    rimraf.sync(diffGeneratedOutputPath);
 
     const defaultDiffConfig = comparisonMethod !== 'ssim' ? defaultPixelmatchDiffConfig : defaultSSIMDiffConfig;
 
@@ -270,6 +273,7 @@ function diffImageToSnapshot(options) {
 
     if (isFailure({ pass, updateSnapshot })) {
       mkdirp.sync(diffDir);
+      mkdirp.sync(diffGeneratedDir);
       const composer = new ImageComposer({
         direction: diffDirection,
       });
@@ -296,6 +300,7 @@ function diffImageToSnapshot(options) {
       // For more information see https://www.w3.org/TR/PNG-Filters.html
       const pngBuffer = PNG.sync.write(compositeResultImage, { filterType: 4 });
       fs.writeFileSync(diffOutputPath, pngBuffer);
+      fs.writeFileSync(diffGeneratedOutputPath, receivedImage);
 
       result = {
         pass: false,
